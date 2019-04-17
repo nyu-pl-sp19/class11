@@ -105,7 +105,7 @@ e.g., the field `first` of `p` by writing `p.first`.
 
 Using class parameters to initialize fields is such a common idiom
 that Scala provides syntactic sugar for this specific usage of class
-parameters. Specifically, we can write the above class more compactly
+parameters. For example, we can write the above class more compactly
 as follows
 
 
@@ -143,10 +143,10 @@ class. More on that later.
 
 ### Methods
 
-The methods of objects are defined as functions in their classes. For
-instance, suppose we want to add a method `print` to our `Point`
-objects that allows us to pretty print point objects on standard
-output. Here is how this would look like:
+The methods of the instances of a class are defined as functions in the
+body of the class. For instance, suppose we want to add a method
+`print` to our `Point` objects that allows us to pretty print point
+objects on standard output. Here is how this would look like:
 
 ```scala
 class Point(val first: Double, val second: Double) {
@@ -160,8 +160,17 @@ Calling a method `m` of an object `e` can be done using the syntax
 `e.m(a1, ..., an)` where `a1` and `an` are the actual arguments passed
 to the formal parameters of the method `m` of `e`. The object that the
 expression `e` before the `.` in a method call evaluates to is called
-the *receiver* of the method call and we refer to `e` as the *receiver
-expression* of the method call expression `e.m(a1, ..., an)`.
+the *receiver object* (or just receiver) of the method call and we
+refer to `e` as the *receiver expression* of the method call
+expression `e.m(a1, ..., an)`. 
+
+Note that a method has access to the fields of the object on which it
+is called. E.g. in our implementation of `print`, we refer to the
+fields `first` and `second` of the instance. In general, when a method
+call is executed on the receiver object `o` that `e` evaluates to,
+then any reference to a field declared in the class where `m` was
+defined (and to which `o` belongs) will refer to the specific values
+of those fields associated with `o`.
 
 Here is how this looks for our example:
 
@@ -174,12 +183,14 @@ Point(1.0, 2.0)
 res0: Unit = ()
 ```
 
-Note that a method has access to the fields of the object on which it
-is called. E.g. in our implementation of `print`, we refer to the
-fields `first` and `second` of the instance. We can thus view methods
-as *global* functions that take the instance on which they operate as
-an additional parameter. For example, the method `print` of class
-`Point` can be viewed as defining the following global function:
+Here, when `print` is called on `p`, then the fields `first` and
+`second` in the body of `print` refer to the specific values `1.0` and
+`2.0` stored in those fields for the instance `p`.
+
+From a technical perspective, we can view methods as *global*
+functions that take the instance on which they operate as an
+additional parameter. For example, the method `print` of class `Point`
+can be viewed as defining the following global function:
 
 ```scala
 def print(this: Point): Unit = {
