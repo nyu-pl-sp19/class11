@@ -604,7 +604,7 @@ differ in the specific values stored in the fields.
 
 What is most important for subtype polymorphism to work is that the
 order in which the fields are stored in the data layout. If class `B`
-extends class `A`, then the fields in `A`'s data layout must be
+extends class `A`, then the fields in `B`'s data layout must be
 ordered such that all fields that are inherited from `A` **occur
 before** the new fields added in `B`. Moreover, the order of the
 inherited fields must **exactly match** the order of those fields in
